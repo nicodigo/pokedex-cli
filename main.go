@@ -3,5 +3,8 @@ package main
 import ()
 
 func main() {
-	startRepl()
+	conf := config{
+		commandRegistry: getCommands(),
+	}
+	startRepl(&conf)
 }

@@ -2,15 +2,15 @@ package main
 
 import "fmt"
 
-func commandHelp() error {
-	if len(commandRegistry) == 0 {
+func commandHelp(conf *config) error {
+	if len(conf.commandRegistry) == 0 {
 		return fmt.Errorf("can't generate help, empty command registry")
 	}
 	fmt.Println()
 	fmt.Println("Welcome to the Pokedex!")
 	fmt.Println("Usage:")
 	fmt.Println()
-	for _, command := range commandRegistry{
+	for _, command := range conf.commandRegistry{
 		fmt.Printf("%s: %s\n", command.name, command.description)
 	}
 	fmt.Println()
