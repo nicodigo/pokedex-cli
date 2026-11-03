@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"github.com/nicodigo/pokedex-cli/internal/pokeapi"
 	"os"
 	"strings"
 )
@@ -15,6 +16,9 @@ type cliCommand struct {
 
 type config struct {
 	commandRegistry map[string]cliCommand
+	client          *pokeapi.PokeApiClient
+	locationNext    *string
+	locationPrev    *string
 }
 
 func cleanInput(text string) []string {
@@ -59,6 +63,16 @@ func getCommands() map[string]cliCommand {
 			name:        "help",
 			description: "Print available commands",
 			callback:    commandHelp,
+		},
+		"map": {
+			name:        "map",
+			description: "Print a list of the next location areas",
+			callback:    commandMapf,
+		},
+		"mapb": {
+			name:        "mapb",
+			description: "Print a list of previous location areas",
+			callback:    commandMapb,
 		},
 	}
 }
