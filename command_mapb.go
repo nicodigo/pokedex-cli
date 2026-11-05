@@ -4,14 +4,14 @@ import (
 	"fmt"
 )
 
-func commandMapb(conf *config) error {
+func commandMapb(conf *config, args []string) error {
 
 	if conf.locationPrev == nil {
 		fmt.Println("you're on the first page")
 		return nil
 	}
 
-	fullUrl := *conf.locationPrev
+	fullUrl := conf.locationPrev
 
 	location_areas, err := conf.client.LocationAreaList(fullUrl)
 	if err != nil {

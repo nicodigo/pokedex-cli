@@ -9,9 +9,9 @@ import (
 )
 
 type cliCommand struct {
-	name        string
+	usage        string
 	description string
-	callback    func(*config) error
+	callback    func(*config, []string) error
 }
 
 type config struct {
@@ -44,9 +44,10 @@ func startRepl(conf *config) {
 			continue
 		}
 
-		err := command.callback(conf)
+		args := input[1:]
+		err := command.callback(conf, args)
 		if err != nil {
-			fmt.Printf("command: %s, error: %v\n", command.name, err)
+			fmt.Printf("command: %s, error: %v\n", input[0], err)
 		}
 
 	}
@@ -55,24 +56,29 @@ func startRepl(conf *config) {
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"exit": {
-			name:        "exit",
+			usage:        "exit",
 			description: "Exit the pokedex",
 			callback:    commandExit,
 		},
 		"help": {
-			name:        "help",
-			description: "Print available commands",
+			usage:        "help",
+			description: "Prints available commands",
 			callback:    commandHelp,
 		},
 		"map": {
-			name:        "map",
-			description: "Print a list of the next location areas",
+			usage:        "map",
+			description: "Prints a list of the next location areas",
 			callback:    commandMapf,
 		},
 		"mapb": {
-			name:        "mapb",
-			description: "Print a list of previous location areas",
+			usage:        "mapb",
+			description: "Prints a list of previous location areas",
 			callback:    commandMapb,
+		},
+		"explore": {
+			usage:        "explore <location-name>",
+			description: "Prints a list of all pokemons for a given area",
+			callback:    commandExplore,
 		},
 	}
 }

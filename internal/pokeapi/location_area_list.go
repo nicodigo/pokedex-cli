@@ -6,8 +6,12 @@ import (
 	"io"
 )
 
-func (c *PokeApiClient) LocationAreaList(url string) (PokeApiListResponse, error) {
+func (c *PokeApiClient) LocationAreaList(confUrl *string) (PokeApiListResponse, error) {
 	data := PokeApiListResponse{}
+	url := baseUrl + "location-area/"
+	if confUrl != nil {
+		url = *confUrl
+	}
 
 	entry, found := c.cache.Get(url)
 	if found {

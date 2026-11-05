@@ -2,7 +2,7 @@ package main
 
 import "fmt"
 
-func commandHelp(conf *config) error {
+func commandHelp(conf *config, args []string) error {
 	if len(conf.commandRegistry) == 0 {
 		return fmt.Errorf("can't generate help, empty command registry")
 	}
@@ -11,7 +11,7 @@ func commandHelp(conf *config) error {
 	fmt.Println("Usage:")
 	fmt.Println()
 	for _, command := range conf.commandRegistry{
-		fmt.Printf("%s: %s\n", command.name, command.description)
+		fmt.Printf("%s: %s\n", command.usage, command.description)
 	}
 	fmt.Println()
 	return nil

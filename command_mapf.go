@@ -2,15 +2,13 @@ package main
 
 import (
 	"fmt"
-
-	"github.com/nicodigo/pokedex-cli/internal/pokeapi"
 )
 
-func commandMapf(conf *config) error {
-	fullUrl := pokeapi.BaseUrl + "location-area/"
+func commandMapf(conf *config, args []string) error {
+	var fullUrl *string = nil
 
 	if conf.locationNext != nil {
-		fullUrl = *conf.locationNext
+		fullUrl = conf.locationNext
 	}
 
 	location_areas, err := conf.client.LocationAreaList(fullUrl)
