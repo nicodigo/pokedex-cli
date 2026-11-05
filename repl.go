@@ -9,7 +9,7 @@ import (
 )
 
 type cliCommand struct {
-	usage        string
+	usage       string
 	description string
 	callback    func(*config, []string) error
 }
@@ -17,6 +17,7 @@ type cliCommand struct {
 type config struct {
 	commandRegistry map[string]cliCommand
 	client          *pokeapi.PokeApiClient
+	pokemonRegistry map[string]pokeapi.Pokemon
 	locationNext    *string
 	locationPrev    *string
 }
@@ -56,29 +57,39 @@ func startRepl(conf *config) {
 func getCommands() map[string]cliCommand {
 	return map[string]cliCommand{
 		"exit": {
-			usage:        "exit",
+			usage:       "exit",
 			description: "Exit the pokedex",
 			callback:    commandExit,
 		},
 		"help": {
-			usage:        "help",
+			usage:       "help",
 			description: "Prints available commands",
 			callback:    commandHelp,
 		},
 		"map": {
-			usage:        "map",
+			usage:       "map",
 			description: "Prints a list of the next location areas",
 			callback:    commandMapf,
 		},
 		"mapb": {
-			usage:        "mapb",
+			usage:       "mapb",
 			description: "Prints a list of previous location areas",
 			callback:    commandMapb,
 		},
 		"explore": {
-			usage:        "explore <location-name>",
+			usage:       "explore <location-name>",
 			description: "Prints a list of all pokemons for a given area",
 			callback:    commandExplore,
+		},
+		"catch": {
+			usage:       "catch <pokemon-name>",
+			description: "Tries to catch a pokemon and add it to the pokedex",
+			callback:    commandCatch,
+		},
+		"inspect": {
+			usage:       "inspect <pokemon-name>",
+			description: "Inspect a previously catched pokemon",
+			callback:    commandInspect,
 		},
 	}
 }
